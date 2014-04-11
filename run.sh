@@ -3,7 +3,7 @@
 #TODO: add icon to window - DONE
 #get ret on all buttons 
 
-#do credits - DONE
+
 #rename some buttons DONE
 #create conditions to get login and password info at beginning DONR
 #update all option to make DONE
