@@ -304,8 +304,7 @@ currentcourse=""
 for i in $(ls -d */)
   do
     i=$(echo $i | awk 'BEGIN {FS="/" } { print $1 }')
-    $currentcourse+=" $i"
-    #print "$currentcourse"
+    $currentcourse+="$i "
   done
 cd ..
 downloadsingleone
@@ -385,7 +384,6 @@ for i in $(ls -d */)
     #echo "$i"
     i=$(echo $i | awk 'BEGIN {FS="/" } { print $1 }')
     #i=${i/$'\n'/}
-    #echo "$i"
     sizeoffolder=$(du -b "$i" | cut -f 1)
     sizeoffolder=$((sizeoffolder / 2**20))
     listoffolders+="$i $sizeoffolder "
