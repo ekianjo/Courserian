@@ -34,24 +34,25 @@ icon="--window-icon=icon.png"
 
 quitprocedure()
 {
-if [ "$smplayerison" == "yes" ] ; then	
+if [ "$smplayerison" == "yes" ] ; then
+  #unmount the SMPlayer PND if used
   /usr/pandora/scripts/pnd_run.sh -p "$smplayerlocation" -b "smplayer" -u &
   smplayerison="no"
 fi
 exit 0
 }
 
-updatecourselist()
+updatecourselist() #updates the course list visible to the user
 {
 listofcourses=""
 totalcourses=0
 sizeoffolder=0
-cd COURSES
+cd COURSES #goes in the COURSES folder where courses are stored
 
-for i in $(ls -d */)
+for i in $(ls -d */) #for each directory i found in that folder...
 do
   totalcourses=$(( $totalcourses + 1 ))
-  i=$(echo $i | awk 'BEGIN {FS="/" } { print $1 }')
+  i=$(echo $i | awk 'BEGIN {FS="/" } { print $1 }') #reduces the path to the folder name
   #listofcourses+="$i"
   #listofcourses+=" "
   #echo "$i"
@@ -59,7 +60,7 @@ do
   #echo "$sizeoffolder"
   #sizeoffolder=$((sizeoffolder / 2**20))
   #echo "$sizeoffolder"
-  listofcourses+="$i $sizeoffolder "
+  listofcourses+="$i $sizeoffolder " #prepared for display in yad as list with 2 columns
   echo "$listofcourses"
 done
 
