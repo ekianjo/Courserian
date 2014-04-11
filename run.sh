@@ -73,7 +73,7 @@ else
 fi
 }
 
-#pandora specific
+#pandora specific for drivers (not sure if it actually makes much difference)
 export SDL_VIDEODRIVER="omapdss"
 export SDL_OMAP_LAYER_SIZE="fullscreen"
 
@@ -86,20 +86,19 @@ if [ -f "smplayerlocation.txt" ] ; then
   smplayerison="yes"
   echo "$smplayerlocation"
 else
-  "" > smplayerlocation.txt
+  "" > smplayerlocation.txt ##probably should actually not ecreate the file!!!
 fi
 
 #browserlocation="/media/nite_ordina/pandora/menu/qupzilla.pnd"
 #/usr/pandora/scripts/pnd_run.sh -p "$browserlocation" -b "qupbrowser" -m
-
-
-
 #/usr/pandora/scripts/pnd_run.sh -p "$smplayerlocation" -m
 #Startup script create courses folder
+
 if [ ! -d "COURSES" ]; then
-  mkdir "COURSES"
+  mkdir "COURSES" #creates folder for first time if not there
 fi
 
+#first message. Ideally should not appear twice. 
 ./yad --title="Courserian" --borders=10 --width=500  --button="gtk-ok:0"  --text="Welcome to Courserian. Courserian is a tool to make it easy for you to download, browse and manage your Coursera lessons." "$icon" --on-top
 
 updatecourselist
@@ -107,14 +106,6 @@ courseentry="Remove/delete a course"
 browsecourse="Browse your courses"
 updatecourse="Download/update your courses"
 
-
-#echo "$totalcourses"
-#if [ $totalcourses -eq 0 ]; then
-#courseentry=""
-#browsecourse=""
-#updatecourse=""
-#else
-#fi
 if [ -f "lastfolder.txt" ]; then
   lastfolder=$(head -n 1 lastfolder.txt)
 else
@@ -159,11 +150,9 @@ if [ "$choice" == "Add a course to follow" ]; then
   addingcourse
 fi
 echo $choice
-if [ "$choice" == "Last working folder" ]; then
+if [ "$choice" == "Last working folder" ]; then  #not working yet
   set -- "$lastfolder" 
   IFS="/"; declare -a Array=($*) 
-  #echo "${Array[@]}" 
-  #echo "${Array[0]}" 
   currentfolder="${Array[1]}"
   currentfolder=${currentfolder/$'\n'/}
   materialfolder="${Array[2]}" 
