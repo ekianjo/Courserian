@@ -23,6 +23,7 @@
 #add what is coursera entry in the menu
 #add option to open excel files and word and ppt files in libreoffice
 #try to add preview function
+#add PC mode, not just Pandora, as well as system detection - see if $yad="./yad" or yad works
 
 showvideoonly="no"
 icon="--window-icon=icon.png"
