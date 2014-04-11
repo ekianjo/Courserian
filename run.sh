@@ -22,9 +22,16 @@
 #automatically check if updated videos are available?
 #add what is coursera entry in the menu
 #add option to open excel files and word and ppt files in libreoffice
+#try to add preview function
 
 showvideoonly="no"
 icon="--window-icon=icon.png"
+
+#not sure if it works, to try
+previewvideo()
+{
+mplayer -ontop -zoom -x 500 -y 300 -geometry 30%:30% video_file &
+}
 
 quitprocedure()
 {
