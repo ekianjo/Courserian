@@ -1,33 +1,27 @@
 #!/bin/bash
 
-#TODO: add icon to window - DONE
+#version nb: to add
+
+#TODO: 
 #get ret on all buttons 
 
-
-#rename some buttons DONE
-#create conditions to get login and password info at beginning DONR
-#update all option to make DONE
-#finish delete function DONE
-#make courerian logo DONE
-#make condition for coursenb at the beginning DONE
-#make interface a bit prettier DONE
-#do real test with full course download one evening DONE
-#add top picture on all screens DONE
-#make zenity download box a bit smaller DONE
- 
- 
 #for version 0.2
 #save position in mplayer playback if possible
 #try to optimize playback for mplayer
 #add launcher for libreoffice if available
 #create log
 #add auto updater for coursera-dl - need git??
-#put checkboxes to clarify what is opened or not
-#capture logged in info from coursera-dl and pipe it
-#display megabytes in zenity download bar if possible
-#add jumanji and let user oepn course in browser
+#put checkboxes to clarify what is opened or not > DONE
+#capture logged in info from coursera-dl and pipe it > HALF DONE
+#display megabytes in zenity download bar if possible > DONE
+#add jumanji and let user open course in browser 
 #check online connectivity
 
+#EN PLUS...
+#add duration of each video and create a file with the video name that has the time value
+#automatically check if updated videos are available?
+#add what is coursera entry in the menu
+#add option to open excel files and word and ppt files in libreoffice
 
 showvideoonly="no"
 icon="--window-icon=icon.png"
@@ -53,13 +47,8 @@ for i in $(ls -d */) #for each directory i found in that folder...
 do
   totalcourses=$(( $totalcourses + 1 ))
   i=$(echo $i | awk 'BEGIN {FS="/" } { print $1 }') #reduces the path to the folder name
-  #listofcourses+="$i"
-  #listofcourses+=" "
-  #echo "$i"
   sizeoffolder=$(du -sh "$i" | cut -f 1)
-  #echo "$sizeoffolder"
   #sizeoffolder=$((sizeoffolder / 2**20))
-  #echo "$sizeoffolder"
   listofcourses+="$i $sizeoffolder " #prepared for display in yad as list with 2 columns
   echo "$listofcourses"
 done
@@ -106,6 +95,7 @@ courseentry="Remove/delete a course"
 browsecourse="Browse your courses"
 updatecourse="Download/update your courses"
 
+#last folder function does not work somehow...
 if [ -f "lastfolder.txt" ]; then
   lastfolder=$(head -n 1 lastfolder.txt)
 else
@@ -113,6 +103,7 @@ else
 fi
 echo "$lastfolder"
 
+#test for login
 if [ -f "login.txt" ] && [ -f "password.txt" ]; then
   login=$(head -n 1 login.txt)
   password=$(head -n 1 password.txt)
@@ -126,7 +117,7 @@ fi
 menu()
 {
 if [ "$login" != "" ]; then
-  menutitle="Menu [ $login ]"
+  menutitle="Menu [ $login ]" #display your porfile name is login is registered
 else
   menutitle="Menu"
 fi
@@ -145,11 +136,11 @@ ret=$?
 if [ $ret -eq 1 ] ; then
   quitprocedure
 fi
-  choice=$(echo $choice | awk 'BEGIN {FS="|" } { print $1 }')
+choice=$(echo $choice | awk 'BEGIN {FS="|" } { print $1 }')
 if [ "$choice" == "Add a course to follow" ]; then
   addingcourse
 fi
-echo $choice
+
 if [ "$choice" == "Last working folder" ]; then  #not working yet
   set -- "$lastfolder" 
   IFS="/"; declare -a Array=($*) 
@@ -298,18 +289,19 @@ if [ "$choice" == "Download/Update a single course" ]; then
 fi
 }
 
-downloadallcourses()
+downloadallcourses() #download all courses one after the other
 {
 cd COURSES
+currentcourse=""
 for i in $(ls -d */)
   do
     i=$(echo $i | awk 'BEGIN {FS="/" } { print $1 }')
-    currentcourse="$i"
-    print "$currentcourse"
-    cd ..
-    downloadsingleone
-    cd COURSES
+    $currentcourse+=" $i"
+    #print "$currentcourse"
   done
+cd ..
+downloadsingleone
+cd COURSES
 cd ..
 menu
 }
@@ -347,6 +339,15 @@ else
     fi
   fi
 fi
+}
+
+calculateduration()
+{
+#to test, not active yet
+mplayer -vo null -ao null -frames 0 -identify "$@" 2>/dev/null |
+        sed -ne '/^ID_/ {
+                          s/[]()|&;<>`'"'"'\\!$" []/\\&/g;p
+                        }'
 }
 
 deletecourseconfirm()
@@ -553,14 +554,8 @@ fi
 #DOWNLOAD single coursepython 
 downloadsingleone()
 {
-#./coursera-dl -u $login -p $password powerofmarkets-001 | ./yad	--text="Downloading..." --width=250 --progress --pulsate 
-#./coursera-dl --path="COURSES" -u $login -p $password $currentcourse | sed 's/.*[ \t][ \t]*\([0-9][0-9]*\)%.*/\1/' | ./yad --width=500 --text="Downloading..." --progress
 echo $currentcourse > currentcourse.txt
-python tracker.py &
-#./coursera-dl --path="COURSES" -u $login -p $password $currentcourse | sed 's/.*[ \t][ \t]*\([0-9][0-9]*\)%.*/\1/' | zenity --progress
+python tracker.py & #this script takes care of displaying the progress bar. Not sure how I can do it the same way in bash...
 }
-
-#DOWNLOAD/update all courses
-#python coursera-dl.py --path=$PATH -u $login -p $password $ALLCOURSES | yad --progress
 
 menu
