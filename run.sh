@@ -33,9 +33,9 @@ version=0.2 #version number
 #to create a new credits text file to be used by credits function - TO TEST
 if [ ! -f "creditsnew.txt" ]; then
   credits="Courserian by Ekianjo \n caca boudin \n "$version""
-  echo credits > creditsnew.txt 
+  echo "$credits" > creditsnew.txt 
 else
-  credits=echo creditsnew.text
+  credits=echo creditsnew.txt
   if [[ "$credits" == *$version* ]]; then
     echo "the file is cool, contains the right credits info"
   fi
