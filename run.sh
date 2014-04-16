@@ -6,48 +6,79 @@
 #get ret on all buttons 
 
 #for version 0.2
-#save position in mplayer playback if possible
 #try to optimize playback for mplayer
-#add launcher for libreoffice if available
-#create log
-#add auto updater for coursera-dl - need git??
+#create log -> NEED TO DEFINE SCOPE OF THE LOG
 #put checkboxes to clarify what is opened or not > DONE
 #capture logged in info from coursera-dl and pipe it > HALF DONE
 #display megabytes in zenity download bar if possible > DONE
+#check online connectivity > DRAFTED, SEE IF IT WORKS
 #add jumanji and let user open course in browser 
-#check online connectivity
+#add launcher for libreoffice if available
+#add version number variable # DRAFTED, need to be checked again
 
 #EN PLUS...
 #add duration of each video and create a file with the video name that has the time value
+#save position in mplayer playback if possible
+#add auto updater for coursera-dl - need git??
 #automatically check if updated videos are available?
 #add what is coursera entry in the menu
 #add option to open excel files and word and ppt files in libreoffice
 #try to add preview function
 #add PC mode, not just Pandora, as well as system detection - see if $yad="./yad" or yad works -STARTED
 
-showvideoonly="no"
-icon="--window-icon=icon.png"
+showvideoonly="no" #confirms if only the videos are displayed in the list of content
+icon="--window-icon=icon.png" #icon used for yad windozs
+version=0.2 #version number
+
+#to create a new credits text file to be used by credits function - TO TEST
+if [ ! -f "creditsnew.txt" ]; then
+  credits="Courserian by Ekianjo \n caca boudin \n "$version""
+  echo credits > creditsnew.txt 
+else
+  credits=echo creditsnew.text
+  if [[ "$credits" == *$version* ]]; then
+    echo "the file is cool, contains the right credits info"
+  fi
+fi
 
 
+#to be used for logging activity within courserian
+timerstart()
+{
+START=$(date +%s.%N)
+}
+
+timerstop()
+{
+END=$(date +%s.%N)
+#DIFF=$(echo "$END - $START" | bc) 
+}
+
+#need to test if this works
 checkonline()
 {
   #found on https://stackoverflow.com/questions/17291233/how-to-check-internet-access-using-bash-script-in-linux
 wget -q --tries=10 --timeout=20 -O - http://google.com > /dev/null
 if [[ $? -eq 0 ]]; then
         online="on"
+        echo "$online"
 else
         online="off"
+        echo "$online"
 fi
 }
 
+#need to test if this works
 desktoporpandora()
 {
 if [ -d "/usr/pandora/" ]; then
   runningmachine="desktop"
   yadcall="yad"
+  echo "you are running Courserian on desktop"
 else
   runningmachine="pandora"
   yadcall="./yad"
+  echo "you are running Courserian on Pandora"
 }
 
 #not sure if it works, to try
@@ -105,20 +136,24 @@ if [ -f "smplayerlocation.txt" ] ; then
   smplayerison="yes"
   echo "$smplayerlocation"
 else
-  "" > smplayerlocation.txt ##probably should actually not ecreate the file!!!
+  "" > smplayerlocation.txt ##probably should not actually create the file!!!
 fi
 
 #browserlocation="/media/nite_ordina/pandora/menu/qupzilla.pnd"
 #/usr/pandora/scripts/pnd_run.sh -p "$browserlocation" -b "qupbrowser" -m
 #/usr/pandora/scripts/pnd_run.sh -p "$smplayerlocation" -m
-#Startup script create courses folder
 
+#Startup script create courses folder
 if [ ! -d "COURSES" ]; then
   mkdir "COURSES" #creates folder for first time if not there
 fi
 
-#first message. Ideally should not appear twice. 
-./yad --title="Courserian" --borders=10 --width=500  --button="gtk-ok:0"  --text="Welcome to Courserian. Courserian is a tool to make it easy for you to download, browse and manage your Coursera lessons." "$icon" --on-top
+#first message. Ideally should not appear twice. to test if it works 
+if [ ! -f "firststart.txt" ] ; then
+  ./yad --title="Courserian" --borders=10 --width=500  --button="gtk-ok:0"  --text="Welcome to Courserian. Courserian is a tool to make it easy for you to download, browse and manage your Coursera lessons." "$icon" --on-top
+else
+  touch firststart.txt #should create a file without content
+fi
 
 updatecourselist
 courseentry="Remove/delete a course"
