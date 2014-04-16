@@ -28,6 +28,18 @@
 showvideoonly="no"
 icon="--window-icon=icon.png"
 
+
+checkonline()
+{
+  #found on https://stackoverflow.com/questions/17291233/how-to-check-internet-access-using-bash-script-in-linux
+wget -q --tries=10 --timeout=20 -O - http://google.com > /dev/null
+if [[ $? -eq 0 ]]; then
+        online="on"
+else
+        online="off"
+fi
+}
+
 desktoporpandora()
 {
 if [ -d "/usr/pandora/" ]; then
