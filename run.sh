@@ -23,10 +23,20 @@
 #add what is coursera entry in the menu
 #add option to open excel files and word and ppt files in libreoffice
 #try to add preview function
-#add PC mode, not just Pandora, as well as system detection - see if $yad="./yad" or yad works
+#add PC mode, not just Pandora, as well as system detection - see if $yad="./yad" or yad works -STARTED
 
 showvideoonly="no"
 icon="--window-icon=icon.png"
+
+desktoporpandora()
+{
+if [ -d "/usr/pandora/" ]; then
+  runningmachine="desktop"
+  yadcall="yad"
+else
+  runningmachine="pandora"
+  yadcall="./yad"
+}
 
 #not sure if it works, to try
 previewvideo()
