@@ -71,7 +71,7 @@ fi
 #need to test if this works
 desktoporpandora()
 {
-if [ -d "/usr/pandora/" ]; then
+if [ ! -d "/usr/pandora/" ]; then
   runningmachine="desktop"
   yadcall="yad"
   echo "you are running Courserian on desktop"
@@ -79,6 +79,7 @@ else
   runningmachine="pandora"
   yadcall="./yad"
   echo "you are running Courserian on Pandora"
+fi
 }
 
 #not sure if it works, to try
@@ -123,12 +124,16 @@ else
 fi
 }
 
+
+desktoporpandora
 #pandora specific for drivers (not sure if it actually makes much difference)
 export SDL_VIDEODRIVER="omapdss"
 export SDL_OMAP_LAYER_SIZE="fullscreen"
 
 #splash screen
-./yad --width=380 --height=140 --image="coursera-large.png" --undecorated --no-buttons --borders=5 --timeout=3 --timeout-indicator=bottom --image-on-top "$icon" --on-top
+#./yad --width=380 --height=140 --image="coursera-large.png" --undecorated --no-buttons --borders=5 --timeout=3 --timeout-indicator=bottom --image-on-top "$icon" --on-top
+$yadcall --width=380 --height=140 --image="coursera-large.png" --undecorated --no-buttons --borders=5 --timeout=3 --timeout-indicator=bottom --image-on-top "$icon" --on-top
+
 
 if [ -f "smplayerlocation.txt" ] ; then
   smplayerlocation=$(head -n 1 smplayerlocation.txt)
@@ -150,7 +155,9 @@ fi
 
 #first message. Ideally should not appear twice. to test if it works 
 if [ ! -f "firststart.txt" ] ; then
-  ./yad --title="Courserian" --borders=10 --width=500  --button="gtk-ok:0"  --text="Welcome to Courserian. Courserian is a tool to make it easy for you to download, browse and manage your Coursera lessons." "$icon" --on-top
+  #./yad --title="Courserian" --borders=10 --width=500  --button="gtk-ok:0"  --text="Welcome to Courserian. Courserian is a tool to make it easy for you to download, browse and manage your Coursera lessons." "$icon" --on-top
+$yadcall --title="Courserian" --borders=10 --width=500  --button="gtk-ok:0"  --text="Welcome to Courserian. Courserian is a tool to make it easy for you to download, browse and manage your Coursera lessons." "$icon" --on-top
+  
 else
   touch firststart.txt #should create a file without content
 fi
@@ -189,12 +196,12 @@ fi
 echo "$menutitle"
 
 if [ $totalcourses -eq 0 ] ; then
-  choice=$(./yad --center --width=300 --borders=5 --height=330 --title="Courserian" --list --column="$menutitle" "$loginentry" "Add a course to follow" "Credits" --image="coursera-small.png" --image-on-top "$icon" --button="gtk-quit:1" --on-top)
+  choice=$($yadcall --center --width=300 --borders=5 --height=330 --title="Courserian" --list --column="$menutitle" "$loginentry" "Add a course to follow" "Credits" --image="coursera-small.png" --image-on-top "$icon" --button="gtk-quit:1" --on-top)
 else
   #if [ "$lastfolder" != "" ]; then
   #choice=$(./yad --center --width=300 --borders=5 --height=330 --title="Courserian" --list --column="$menutitle" "$loginentry" "Add a course to follow" "$courseentry" "Last working folder" "$browsecourse" "$updatecourse" "Extras" "Credits" --image="coursera-small.png" --image-on-top --button="gtk-quit:1" "$icon" --on-top)
   #else
-  choice=$(./yad --center --width=300 --borders=5 --height=330 --title="Courserian" --list --column="$menutitle" "$loginentry" "Add a course to follow" "$courseentry" "$browsecourse" "$updatecourse" "Extras" "Credits" --image="coursera-small.png" --image-on-top --button="gtk-quit:1" "$icon" --on-top)
+  choice=$($yadcall --center --width=300 --borders=5 --height=330 --title="Courserian" --list --column="$menutitle" "$loginentry" "Add a course to follow" "$courseentry" "$browsecourse" "$updatecourse" "Extras" "Credits" --image="coursera-small.png" --image-on-top --button="gtk-quit:1" "$icon" --on-top)
   #fi
 fi
 ret=$?
@@ -244,21 +251,21 @@ fi
 
 if [ "$choice" == "Credits" ]; then
   #./yad --center --width=380 --borders=5 --height=330 --title="Courserian" --image="coursera2.png" --image-on-top --list --column="Credits" "Created by Ekianjo, 2013-2014. GPL v2 License." "Uses Coursera-dl as backend, Yad for GUI." "Released for the Alive and Kicking Coding Competition" "Logo of Courserian made with ImageJ by Ekianjo" "Created on Open Pandora. Version 0.2." --button="gtk-ok" --on-top
-  ./yad --center --width=380 --borders=5 --height=330 --title="Courserian" --image="coursera2.png" --image-on-top --text-info --filename=credits.txt --html --button="gtk-ok" --on-top
+  $yadcall --center --width=380 --borders=5 --height=330 --title="Courserian" --image="coursera2.png" --image-on-top --text-info --filename=credits.txt --html --button="gtk-ok" --on-top
   menu
 fi
 }
 
 warnlogindetails()
 {
-./yad --center --width=200 --borders=5 --height=80 --title="Courserian" --text="You need to first enter your login details in order to download anything." "$icon" --on-top
+$yadcall --center --width=200 --borders=5 --height=80 --title="Courserian" --text="You need to first enter your login details in order to download anything." "$icon" --on-top
 }
 
 extrasmenu()
 {
 size=${#smplayerlocation}
 if [ "$size" -lt 5 ] ; then
-  choice=$(./yad --center --image="coursera-small.png" --image-on-top --width=300 --borders=5 --height=300 --title="Courserian" --list --column="Download courses" "[Back to main menu]" "Find SMPlayer" "$icon" --button="gtk-quit:9" --on-top)
+  choice=$($yadcall --center --image="coursera-small.png" --image-on-top --width=300 --borders=5 --height=300 --title="Courserian" --list --column="Download courses" "[Back to main menu]" "Find SMPlayer" "$icon" --button="gtk-quit:9" --on-top)
   ret=$?
   if [ $ret -eq 9 ] ; then
     quitprocedure
@@ -280,7 +287,7 @@ if [ "$size" -lt 5 ] ; then
 
 else
   if [ "$smplayerison" == "yes" ] ; then
-    choice=$(./yad --center --image="coursera-small.png" --image-on-top --width=300 --borders=5 --height=300 --title="Courserian" --list --column="Download courses" "[Back to main menu]" "Unmount SMPlayer" "$icon" --button="gtk-quit:9" --on-top)
+    choice=$($yadcall --center --image="coursera-small.png" --image-on-top --width=300 --borders=5 --height=300 --title="Courserian" --list --column="Download courses" "[Back to main menu]" "Unmount SMPlayer" "$icon" --button="gtk-quit:9" --on-top)
     ret=$?
     if [ $ret -eq 9 ] ; then
       quitprocedure
@@ -297,7 +304,7 @@ else
     fi
 
   else
-    choice=$(./yad --center --image="coursera-small.png" --image-on-top --width=300 --borders=5 --height=300 --title="Courserian" --list --column="Download courses" "[Back to main menu]" "Make SMPlayer the default player" "$icon" --button="gtk-quit:9" --on-top)
+    choice=$($yadcall --center --image="coursera-small.png" --image-on-top --width=300 --borders=5 --height=300 --title="Courserian" --list --column="Download courses" "[Back to main menu]" "Make SMPlayer the default player" "$icon" --button="gtk-quit:9" --on-top)
     ret=$?
     if [ $ret -eq 9 ] ; then
       quitprocedure
@@ -330,7 +337,7 @@ fi
 
 downloadcoursemenu()
 {
-choice=$(./yad --center --image="coursera-small.png" --image-on-top --width=300 --borders=5 --height=300 --title="Courserian" --list --column="Download courses" "[Back to main menu]" "Download/Update a single course" "Download/update all" "$icon" --button="gtk-quit:9" --button="Top Menu:5" --on-top)
+choice=$($yadcall --center --image="coursera-small.png" --image-on-top --width=300 --borders=5 --height=300 --title="Courserian" --list --column="Download courses" "[Back to main menu]" "Download/Update a single course" "Download/update all" "$icon" --button="gtk-quit:9" --button="Top Menu:5" --on-top)
 ret=$?
 if [ "$ret" -eq "9" ] ; then
   quitprocedure
@@ -376,7 +383,7 @@ addedtext=""
 echo "$mode"
 if [ "$mode" == "download" ] ; then addedtext="to download" ; fi
 if [ "$mode" == "delete" ] ; then addedtext="to delete" ; fi
-choice=$(./yad --center --image="coursera-small.png" --image-on-top --width=300 --borders=5 --height=300 --title="Courserian" --list --column="Select a course $addedtext" --column="Folder Size" "[Back to main menu]" " " $listofcourses --button="gtk-quit:9" --button="Top Menu:5" "$icon" --on-top)
+choice=$($yadcall --center --image="coursera-small.png" --image-on-top --width=300 --borders=5 --height=300 --title="Courserian" --list --column="Select a course $addedtext" --column="Folder Size" "[Back to main menu]" " " $listofcourses --button="gtk-quit:9" --button="Top Menu:5" "$icon" --on-top)
 ret=$?
 if [ "$ret" -eq "9" ] ; then
   quitprocedure
@@ -417,7 +424,7 @@ mplayer -vo null -ao null -frames 0 -identify "$@" 2>/dev/null |
 deletecourseconfirm()
 {
 echo "delete course confirm"
-confirm=$(./yad --center --width=200 --borders=5  --title="Courserian" --text="Are you sure you want to delete\n the course $currentcourse ?" --button="gtk-yes:0" --button="gtk-no:1" "$icon" --on-top)
+confirm=$($yadcall --center --width=200 --borders=5  --title="Courserian" --text="Are you sure you want to delete\n the course $currentcourse ?" --button="gtk-yes:0" --button="gtk-no:1" "$icon" --on-top)
 ret=$?
 if [[ $ret -eq 0 ]]; then
   cd COURSES
@@ -448,7 +455,7 @@ for i in $(ls -d */)
   done
 cd ..
 cd ..
-choice=$(./yad --center --image="coursera-long.png" --image-on-top --width=700 --borders=5 --height=350 --title="Courserian" --list --column="$currentfolder > Select a subfolder" --column="Size (Mb)" "[Back to previous menu]" " " $listoffolders --button="gtk-quit:9" --button="Top Menu:5" --button="Go Up:4" "$icon" --on-top)
+choice=$($yadcall --center --image="coursera-long.png" --image-on-top --width=700 --borders=5 --height=350 --title="Courserian" --list --column="$currentfolder > Select a subfolder" --column="Size (Mb)" "[Back to previous menu]" " " $listoffolders --button="gtk-quit:9" --button="Top Menu:5" --button="Go Up:4" "$icon" --on-top)
 ret=$?
 choice=$(echo $choice | awk 'BEGIN {FS="|" } { print $1 }')
 if [ "$ret" -eq "9" ] ; then
@@ -504,7 +511,7 @@ if [ "$showvideoonly" == "no" ] ; then
 else
   buttonvideolabel="Show All files"
 fi
-choice=$(./yad --image="coursera-long.png" --image-on-top --center --width=700 --borders=5 --height=350 --title="Courserian" --list --column="$columntext" --column="Size (Mb)" --column="Viewed" "[Back to previous menu]" " " " " $listofmaterials --button="gtk-quit:9" --button="$buttonvideolabel:6" --button="Top Menu:5" --button="Go Up:4" "$icon" --on-top)
+choice=$($yadcall --image="coursera-long.png" --image-on-top --center --width=700 --borders=5 --height=350 --title="Courserian" --list --column="$columntext" --column="Size (Mb)" --column="Viewed" "[Back to previous menu]" " " " " $listofmaterials --button="gtk-quit:9" --button="$buttonvideolabel:6" --button="Top Menu:5" --button="Go Up:4" "$icon" --on-top)
 ret=$?
 choice=$(echo $choice | awk 'BEGIN {FS="|" } { print $1 }')
 echo $choice
@@ -559,7 +566,7 @@ fi
 #LOGIN / PASSWORD
 login()
 {
-dialog=$(./yad --center --borders=10 --title="Login Details" --form --field="Coursera Login" --text="Login info will be saved locally" --field="password":H "$icon" --on-top)
+dialog=$($yadcall --center --borders=10 --title="Login Details" --form --field="Coursera Login" --text="Login info will be saved locally" --field="password":H "$icon" --on-top)
 login=$(echo $dialog | awk 'BEGIN {FS="|" } { print $1 }')
 password=$(echo $dialog | awk 'BEGIN {FS="|" } { print $2 }')
 #save them to text file
@@ -580,7 +587,7 @@ menu
 addingcourse()
 {
 #ADDING A COURSE
-entry=$(./yad --width=400 --center --borders=10 --title="Courserian" --text="Enter the course code you wish to add.\n You can find this code or short name in the URL of your course.\n For example..." --form --field="Course Name" "$icon" --on-top)
+entry=$($yadcall --width=400 --center --borders=10 --title="Courserian" --text="Enter the course code you wish to add.\n You can find this code or short name in the URL of your course.\n For example..." --form --field="Course Name" "$icon" --on-top)
 entry=$(echo $entry | awk 'BEGIN {FS="|" } { print $1 }')
 if [ "$entry" != "" ]; then
   downloadsingle
@@ -597,7 +604,7 @@ fi
 downloadsingle()
 {
 #-> after adding a course, confirm if user wants to download the associated material
-answer=$(./yad --width=350 --center --borders=10 --title="Courserian" --text="You have just added the course $entry in Courserian,\n would you like to download the course contents right now ?\n\n Note that you need to have accepted the code of Honor\n for that particular course on the Coursera website first." --button="gtk-yes:0" --button="gtk-no:1" "$icon" --on-top)
+answer=$($yadcall --width=350 --center --borders=10 --title="Courserian" --text="You have just added the course $entry in Courserian,\n would you like to download the course contents right now ?\n\n Note that you need to have accepted the code of Honor\n for that particular course on the Coursera website first." --button="gtk-yes:0" --button="gtk-no:1" "$icon" --on-top)
 ret=$?
 echo "$ret"
 if [[ $ret -eq 0 ]]; then
@@ -620,5 +627,6 @@ downloadsingleone()
 echo $currentcourse > currentcourse.txt
 python tracker.py & #this script takes care of displaying the progress bar. Not sure how I can do it the same way in bash...
 }
+
 
 menu
