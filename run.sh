@@ -30,6 +30,8 @@ showvideoonly="no" #confirms if only the videos are displayed in the list of con
 icon="--window-icon=icon.png" #icon used for yad windozs
 version=0.2 #version number
 
+creditsfile()
+{
 #to create a new credits text file to be used by credits function - TO TEST
 if [ ! -f "creditsnew.txt" ]; then
   credits="Courserian by Ekianjo \n caca boudin \n "$version""
@@ -40,7 +42,7 @@ else
     echo "the file is cool, contains the right credits info"
   fi
 fi
-
+}
 
 #to be used for logging activity within courserian
 timerstart()
@@ -134,7 +136,8 @@ export SDL_OMAP_LAYER_SIZE="fullscreen"
 #./yad --width=380 --height=140 --image="coursera-large.png" --undecorated --no-buttons --borders=5 --timeout=3 --timeout-indicator=bottom --image-on-top "$icon" --on-top
 $yadcall --width=380 --height=140 --image="coursera-large.png" --undecorated --no-buttons --borders=5 --timeout=3 --timeout-indicator=bottom --image-on-top "$icon" --on-top
 
-
+locatesmplayer()
+{
 if [ -f "smplayerlocation.txt" ] ; then
   smplayerlocation=$(head -n 1 smplayerlocation.txt)
   /usr/pandora/scripts/pnd_run.sh -p "$smplayerlocation" -b "smplayer" -m
@@ -143,16 +146,22 @@ if [ -f "smplayerlocation.txt" ] ; then
 else
   "" > smplayerlocation.txt ##probably should not actually create the file!!!
 fi
+}
 
 #browserlocation="/media/nite_ordina/pandora/menu/qupzilla.pnd"
 #/usr/pandora/scripts/pnd_run.sh -p "$browserlocation" -b "qupbrowser" -m
 #/usr/pandora/scripts/pnd_run.sh -p "$smplayerlocation" -m
 
+coursesfolder()
+{
 #Startup script create courses folder
 if [ ! -d "COURSES" ]; then
   mkdir "COURSES" #creates folder for first time if not there
 fi
+}
 
+firststartcheck()
+{
 #first message. Ideally should not appear twice. to test if it works 
 if [ ! -f "firststart.txt" ] ; then
   #./yad --title="Courserian" --borders=10 --width=500  --button="gtk-ok:0"  --text="Welcome to Courserian. Courserian is a tool to make it easy for you to download, browse and manage your Coursera lessons." "$icon" --on-top
@@ -161,8 +170,13 @@ $yadcall --title="Courserian" --borders=10 --width=500  --button="gtk-ok:0"  --t
 else
   touch firststart.txt #should create a file without content
 fi
+}
+
 
 updatecourselist
+
+startupscript()
+{
 courseentry="Remove/delete a course"
 browsecourse="Browse your courses"
 updatecourse="Download/update your courses"
@@ -185,6 +199,7 @@ else
   password=""
   loginentry="Enter your Login details"
 fi
+}
 
 menu()
 {
