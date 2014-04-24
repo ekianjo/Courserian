@@ -81,6 +81,7 @@ else
   runningmachine="pandora"
   yadcall="./yad"
   echo "you are running Courserian on Pandora"
+  locatesmplayer
 fi
 }
 
@@ -92,12 +93,15 @@ mplayer -ontop -zoom -x 500 -y 300 -geometry 30%:30% video_file &
 
 quitprocedure()
 {
-if [ "$smplayerison" == "yes" ] ; then
-  #unmount the SMPlayer PND if used
-  /usr/pandora/scripts/pnd_run.sh -p "$smplayerlocation" -b "smplayer" -u &
-  smplayerison="no"
+if [ "$runningmachine" == "pandora" ] ; then
+  if [ "$smplayerison" == "yes" ] ; then
+    #unmount the SMPlayer PND if used
+    /usr/pandora/scripts/pnd_run.sh -p "$smplayerlocation" -b "smplayer" -u &
+    smplayerison="no"
+  fi
 fi
 exit 0
+  
 }
 
 updatecourselist() #updates the course list visible to the user
@@ -127,14 +131,6 @@ fi
 }
 
 
-desktoporpandora
-#pandora specific for drivers (not sure if it actually makes much difference)
-export SDL_VIDEODRIVER="omapdss"
-export SDL_OMAP_LAYER_SIZE="fullscreen"
-
-#splash screen
-#./yad --width=380 --height=140 --image="coursera-large.png" --undecorated --no-buttons --borders=5 --timeout=3 --timeout-indicator=bottom --image-on-top "$icon" --on-top
-$yadcall --width=380 --height=140 --image="coursera-large.png" --undecorated --no-buttons --borders=5 --timeout=3 --timeout-indicator=bottom --image-on-top "$icon" --on-top
 
 locatesmplayer()
 {
@@ -171,9 +167,6 @@ else
   touch firststart.txt #should create a file without content
 fi
 }
-
-
-updatecourselist
 
 startupscript()
 {
@@ -643,5 +636,18 @@ echo $currentcourse > currentcourse.txt
 python tracker.py & #this script takes care of displaying the progress bar. Not sure how I can do it the same way in bash...
 }
 
+#FULL PROGRAM FLOW BELOW---------------------------------------
+
+#pandora specific for drivers (not sure if it actually makes much difference)
+export SDL_VIDEODRIVER="omapdss"
+export SDL_OMAP_LAYER_SIZE="fullscreen"
+
+desktoporpandora
+coursesfolder
+updatecourselist
+firststartcheck
+startupscript
+#./yad --width=380 --height=140 --image="coursera-large.png" --undecorated --no-buttons --borders=5 --timeout=3 --timeout-indicator=bottom --image-on-top "$icon" --on-top
+$yadcall --width=380 --height=140 --image="coursera-large.png" --undecorated --no-buttons --borders=5 --timeout=3 --timeout-indicator=bottom --image-on-top "$icon" --on-top
 
 menu
