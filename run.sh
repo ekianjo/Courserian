@@ -553,7 +553,11 @@ if [ "$extension" == "srt" ] || [ "$extension" == "txt" ] ; then
 fi
 if [ "$extension" == "pdf" ] ; then
   " " > COURSES/"$currentfolder"/"$materialfolder"/".""$choice"".read"
-  evince -s COURSES/"$currentfolder"/"$materialfolder"/"$choice"
+  if [ "$runningmachine" == "pandora" ] ; then
+    evince -s COURSES/"$currentfolder"/"$materialfolder"/"$choice"
+  else
+    xdg-open COURSES/"$currentfolder"/"$materialfolder"/"$choice"
+  fi
   explorematerials
 fi
 if [ "$extension" == "mp4" ] ; then
