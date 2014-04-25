@@ -38,7 +38,7 @@ if [ ! -f "creditsnew.txt" ]; then
   credits="Courserian by Ekianjo \n caca boudin \n "$version""
   echo "$credits" > creditsnew.txt 
 else
-  credits='cat creditsnew.txt'
+  credits=$('cat creditsnew.txt')
   if [[ "$credits" == *$version* ]]; then
     echo "the file is cool, contains the right credits info"
   fi
