@@ -41,6 +41,9 @@ else
   credits=$('cat creditsnew.txt')
   if [[ "$credits" == *$version* ]]; then
     echo "the file is cool, contains the right credits info"
+  else
+    credits="Courserian by Ekianjo \n caca boudin \n "$version""
+    echo "$credits" > creditsnew.txt 
   fi
 fi
 }
@@ -632,6 +635,10 @@ else
 fi
 }
 
+splashscreen()
+{
+  $yadcall --width=380 --height=140 --image="coursera-large.png" --undecorated --no-buttons --borders=5 --timeout=3 --timeout-indicator=bottom --image-on-top "$icon" --on-top
+}
 #DOWNLOAD single coursepython 
 downloadsingleone()
 {
@@ -645,12 +652,12 @@ python tracker.py & #this script takes care of displaying the progress bar. Not 
 export SDL_VIDEODRIVER="omapdss"
 export SDL_OMAP_LAYER_SIZE="fullscreen"
 
+creditsfile
 desktoporpandora
 coursesfolder
 updatecourselist
 firststartcheck
 startupscript
 #./yad --width=380 --height=140 --image="coursera-large.png" --undecorated --no-buttons --borders=5 --timeout=3 --timeout-indicator=bottom --image-on-top "$icon" --on-top
-$yadcall --width=380 --height=140 --image="coursera-large.png" --undecorated --no-buttons --borders=5 --timeout=3 --timeout-indicator=bottom --image-on-top "$icon" --on-top
-
+splashscreen
 menu
