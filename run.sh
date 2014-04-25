@@ -548,7 +548,11 @@ fi
 extension=${choice: -3}
 if [ "$extension" == "srt" ] || [ "$extension" == "txt" ] ; then
   " " > COURSES/"$currentfolder"/"$materialfolder"/".""$choice"".read"
-  mousepad COURSES/"$currentfolder"/"$materialfolder"/"$choice"
+  if [ "$runningmachine" == "pandora" ] ; then
+    mousepad COURSES/"$currentfolder"/"$materialfolder"/"$choice"
+  else
+    xdg-open COURSES/"$currentfolder"/"$materialfolder"/"$choice"
+  fi
   explorematerials
 fi
 if [ "$extension" == "pdf" ] ; then
@@ -561,20 +565,24 @@ if [ "$extension" == "pdf" ] ; then
   explorematerials
 fi
 if [ "$extension" == "mp4" ] ; then
-  if [ "$smplayerison" == "yes" ] ; then	
+
   " " > COURSES/"$currentfolder"/"$materialfolder"/".""$choice"".read"
-  "COURSES/$currentfolder/$materialfolder" > lastfolder.txt
-  /mnt/utmp/smplayer/bin/mplayer -ss 14 -framedrop -vo omapfb -autoq 6 -fs -nocache COURSES/"$currentfolder"/"$materialfolder"/"$choice" > out.txt
-  #/mnt/utmp/smplayer2_r6/bin/smplayer2 COURSES/"$currentfolder"/"$materialfolder"/"$choice"
-  #else
-  #mplayer/bin/mplayer -vo sdl -autoq 3 -nocache -fs -framedrop COURSES/"$currentfolder"/"$materialfolder"/"$choice"
-  explorematerials
+
+  if [ "$runningmachine" == "pandora" ] ; then
+    if [ "$smplayerison" == "yes" ] ; then	
+      "COURSES/$currentfolder/$materialfolder" > lastfolder.txt
+      /mnt/utmp/smplayer/bin/mplayer -ss 14 -framedrop -vo omapfb -autoq 6 -fs -nocache COURSES/"$currentfolder"/"$materialfolder"/"$choice" > out.txt
+      #/mnt/utmp/smplayer2_r6/bin/smplayer2 COURSES/"$currentfolder"/"$materialfolder"/"$choice"
+      #else
+      #mplayer/bin/mplayer -vo sdl -autoq 3 -nocache -fs -framedrop COURSES/"$currentfolder"/"$materialfolder"/"$choice"
+    else
+      echo "COURSES/$currentfolder/$materialfolder" > lastfolder.txt
+      mplayer -fs -framedrop -vo sdl COURSES/"$currentfolder"/"$materialfolder"/"$choice"
+    fi
   else
-    " " > COURSES/"$currentfolder"/"$materialfolder"/".""$choice"".read"
-    echo "COURSES/$currentfolder/$materialfolder" > lastfolder.txt
-    mplayer -fs -framedrop -vo sdl COURSES/"$currentfolder"/"$materialfolder"/"$choice"
-    explorematerials
+    xdg-open COURSES/"$currentfolder"/"$materialfolder"/"$choice"
   fi
+explorematerials
 fi
 if [ "$extension" == "ptx" ] ; then
   explorematerials
