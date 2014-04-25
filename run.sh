@@ -26,6 +26,7 @@
 #try to add preview function
 #add PC mode, not just Pandora, as well as system detection - see if $yad="./yad" or yad works -STARTED
 
+#Initial parameters
 showvideoonly="no" #confirms if only the videos are displayed in the list of content
 icon="--window-icon=icon.png" #icon used for yad windozs
 version=0.2 #version number
@@ -37,7 +38,7 @@ if [ ! -f "creditsnew.txt" ]; then
   credits="Courserian by Ekianjo \n caca boudin \n "$version""
   echo "$credits" > creditsnew.txt 
 else
-  credits=echo creditsnew.txt
+  credits='cat creditsnew.txt'
   if [[ "$credits" == *$version* ]]; then
     echo "the file is cool, contains the right credits info"
   fi
