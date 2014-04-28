@@ -67,10 +67,10 @@ checkonline()
 wget -q --tries=10 --timeout=20 -O - http://google.com > /dev/null
 if [[ $? -eq 0 ]]; then
         online="on"
-        echo "$online"
+        echo "online status is $online"
 else
         online="off"
-        echo "$online"
+        echo "online status is $online"
 fi
 }
 
@@ -385,6 +385,7 @@ for i in $(ls -d */)
     $currentcourse+="$i "
   done
 cd ..
+checkonline
 downloadsingleone
 cd COURSES
 cd ..
@@ -409,6 +410,7 @@ if [ "$choice" == "[Back to main menu]" ] || [ "$ret" -eq "5" ] ; then
 else
   if [ "$mode" == "download" ]; then
     currentcourse="$choice"
+    checkonline
     downloadsingleone
     mode=""
     menu
@@ -629,6 +631,7 @@ fi
 
 downloadsingle()
 {
+
 #-> after adding a course, confirm if user wants to download the associated material
 answer=$($yadcall --width=350 --center --borders=10 --title="Courserian" --text="You have just added the course $entry in Courserian,\n would you like to download the course contents right now ?\n\n Note that you need to have accepted the code of Honor\n for that particular course on the Coursera website first." --button="gtk-yes:0" --button="gtk-no:1" "$icon" --on-top)
 ret=$?
@@ -636,6 +639,7 @@ echo "$ret"
 if [[ $ret -eq 0 ]]; then
   currentcourse="$entry"
   echo $ret
+  checkonline
   downloadsingleone
   updatecourselist
   menu
