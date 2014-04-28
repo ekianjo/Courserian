@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#version nb: to add
+#license info to add
 
 #TODO: 
 #get ret on all buttons 
