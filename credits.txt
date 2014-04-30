@@ -1,0 +1,8 @@
+
+   Created by Ekianjo, 2013-2014, GPL v2 License
+   Created on Open Pandora. Version 0.4 (7th Feb 2014)
+   Logo made with ImageJ by Ekianjo.
+   Uses coursera-dl as backend, Yad for GUI. 
+   Released for the Alive and Kicking Coding Competition.
+   Greetings go to PtitSeb, _wb_, ED, and all the others
+   who make the Pandora scene awesome.

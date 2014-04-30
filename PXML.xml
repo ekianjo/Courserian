@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PXML xmlns="http://openpandora.org/namespaces/PXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PXML_schema.xsd">
+  <application id="courserian">
+    <exec command="run.sh"/>
+    <title lang="en_US">Courserian</title>
+    <author name="Ekianjo" website="https://github.com/ekianjo/Courserian"/>
+    <version major="0" minor="3" release="0" build="4" type="release"/>
+    <osversion major="1" minor="0" release="0" build="0"/>
+    <description lang="en_US">Courserian is an GUI application to download, manages and view course material from Coursera (http://www.coursera.org), one of the providers of free online courses from renowned universities around the globe. Basically, with Courserian you can follow your donloaded courses on the go, offline, without the need of another computer. I hope Courserian can become your daily companion to learn more stuff, everywhere, every day.
+
+Courserian is a candidate for the Alive And Kicking Coding Competition. 
+
+To use Courserian, you need to have completed these steps:
+- to have registered an account on Coursera.org (free to create)
+- to have registered to follow at least one course
+- to have at least one course which has started (and not closed yet)
+- to have accepted the code of Honor for that course
+
+Once you are done, 
+1) Launch Courserian from the Education menu in xfce
+2) Enter your Login Details (login and password from Coursera.org) - only the first time.
+3) Add a course to follow: check the URL of your course in your course page (for example, https://class.coursera.org/powerofmarkets-001) and insert the name after class.coursera.org/, i.e. powerofmarkets-001 in this example. 
+4) Decide to download the course material immediately or not
+5) Once you have downloaded some material, you can browse the material through Courserian
+6) Courserian will open txt, srt, pdf, and video files for you. (word, excel and ppt files are not yet supported)
+7) Coursera updates courses material every week, so you can run a "Course update" every week to get the latest course material with Courserian. 
+
+Additional Features:
+- You can delete courses from Courserian once you are done with them, to save space. 
+- You can go in the Extras Menu and ask to use SMPlayer (if you have it installed on your SD Card) to view videos (since the Mplayer in the firmware is not working well enough for some videos)
+- to do: install SMPlayer from extras.
+- to do: email notification from extras
+
+Version 0.3 - Added features (SMPlayer loaded by default always after you set it up once, Column to track which videos you have viewed so far) and another bug fix. 
+Version 0.2 - Added features (file size of course display, show videos only button, background download by default) and various fixes.
+Version 0.1 - Initial Release - Tested only on 1.60 Firmware so far. 
+
+Tools used: 
+Yad (front-end), Coursera-dl (backend), ImageJ (logo).
+All work done entirely on Pandora with Geany. 
+
+</description>
+    <icon src="icon.png"/>
+    <previewpics>
+      <pic src="screens/01.png"/>
+      <pic src="screens/02.png"/>
+      <pic src="screens/03.png"/>
+      <pic src="screens/04.png"/>
+      <pic src="screens/05.png"/>
+      <pic src="screens/06.png"/>
+
+    </previewpics>
+    <categories>
+      <category name="Education">
+      </category>
+    </categories>
+  </application>
+</PXML>

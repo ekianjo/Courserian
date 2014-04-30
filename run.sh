@@ -49,15 +49,15 @@ creditsfile()
 {
 #to create a new credits text file to be used by credits function - TO TEST
 if [ ! -f "creditsnew.txt" ]; then
-  credits="Courserian by Ekianjo \n caca boudin \n "$version""
-  echo "$credits" > creditsnew.txt 
+  credits="Courserian by Ekianjo \n Version "$version""
+  printf "$credits" > creditsnew.txt 
 else
-  credits=$('cat creditsnew.txt')
+  credits=$(cat creditsnew.txt)
   if [[ "$credits" == *$version* ]]; then
     echo "the file is cool, contains the right credits info"
   else
-    credits="Courserian by Ekianjo \n caca boudin \n "$version""
-    echo "$credits" > creditsnew.txt 
+    credits="Courserian by Ekianjo \n Version \n "$version""
+    printf "$credits" > creditsnew.txt 
   fi
 fi
 }
@@ -279,7 +279,7 @@ fi
 
 if [ "$choice" == "Credits" ]; then
   #./yad --center --width=380 --borders=5 --height=330 --title="Courserian" --image="coursera2.png" --image-on-top --list --column="Credits" "Created by Ekianjo, 2013-2014. GPL v2 License." "Uses Coursera-dl as backend, Yad for GUI." "Released for the Alive and Kicking Coding Competition" "Logo of Courserian made with ImageJ by Ekianjo" "Created on Open Pandora. Version 0.2." --button="gtk-ok" --on-top
-  $yadcall --center --width=380 --borders=5 --height=330 --title="Courserian" --image="coursera2.png" --image-on-top --text-info --filename=credits.txt --html --button="gtk-ok" --on-top
+  $yadcall --center --width=380 --borders=5 --height=330 --title="Courserian" --image="coursera2.png" --image-on-top --text-info --filename=creditsnew.txt --button="gtk-ok" --on-top
   menu
 fi
 }
