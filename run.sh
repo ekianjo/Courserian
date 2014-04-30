@@ -30,6 +30,19 @@
 showvideoonly="no" #confirms if only the videos are displayed in the list of content
 icon="--window-icon=icon.png" #icon used for yad windozs
 version=0.2 #version number
+globalcoursesfolder="COURSES"
+
+loadglobalcoursesfoldervariable()
+{
+  #load the text file it it exists and default to COURSES otherwise
+}
+
+changefolder()
+{
+$globalcoursesfolder=$yadcall --file --directory
+ #put stuff here to change folder 
+ #save folder in text file
+}
 
 creditsfile()
 {
