@@ -35,6 +35,7 @@ globalcoursesfolder="COURSES"
 loadglobalcoursesfoldervariable()
 {
   #load the text file it it exists and default to COURSES otherwise
+  echo "yo man"
 }
 
 changefolder()
