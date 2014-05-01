@@ -485,7 +485,7 @@ for i in $(ls -d */)
   done
 cd ..
 cd ..
-choice=$($yadcall --center --image="coursera-long.png" --image-on-top --width=700 --borders=5 --height=350 --title="Courserian" --list --column="$currentfolder > Select a subfolder" --column="Size (Mb)" "[Back to previous menu]" " " $listoffolders --button="gtk-quit:9" --button="Top Menu:5" --button="Go Up:4" "$icon" --on-top)
+choice=$($yadcall --center --image="coursera-long.png" --image-on-top --width=700 --borders=5 --height=350 --title="Courserian" --list --column="$currentfolder > Select a subfolder" --column="Size (Mb)" "[Back to previous menu]" " " $listoffolders --button="gtk-quit:9" --button="Top Menu:5" --button="Go Up:4" --button="Delete Folder:3" "$icon" --on-top)
 ret=$?
 choice=$(echo $choice | awk 'BEGIN {FS="|" } { print $1 }')
 if [ "$ret" -eq "9" ] ; then
@@ -493,6 +493,15 @@ if [ "$ret" -eq "9" ] ; then
 fi
 if [ "$ret" -eq "5" ] ; then 
   menu
+fi
+if [ ! "$choice" == "[Back to previous menu]" ] || [ "$ret" -eq "3" ] ; then
+  confirm=$($yadcall --center --width=200 --borders=5  --title="Courserian" --text="Are you sure you want to delete\n the course $choice ?" --button="gtk-yes:0" --button="gtk-no:1" "$icon" --on-top)
+  ret=$?
+  if [[ $ret -eq 0 ]]; then
+    rm -r "$choice" 
+    updatecourselist
+    explorefolder
+  fi
 fi
 if [ "$choice" == "[Back to previous menu]" ] || [ "$ret" -eq "4" ] ; then
   showcourses
@@ -608,7 +617,7 @@ fi
 #LOGIN / PASSWORD
 login()
 {
-dialog=$($yadcall --center --borders=10 --title="Login Details" --form --field="Coursera Login" --text="Login info will be saved locally" --field="password":H "$icon" --on-top)
+dialog=$($yadcall --center --borders=10 --title="Login Details" --form --field="Coursera Login" --text="Login info will be saved locally" --field="Password":H "$icon" --on-top)
 login=$(echo $dialog | awk 'BEGIN {FS="|" } { print $1 }')
 password=$(echo $dialog | awk 'BEGIN {FS="|" } { print $2 }')
 #save them to text file
