@@ -71,11 +71,11 @@ signaldownload()
 downloadingcheck()
 {
   if [ ! -f "tmp/downloading" ]; then
-    downloading="True"
-    positionning="--geometry=500x300+10+10"
-  else
     downloading="False"
     positionning="--center"
+  else
+    downloading="True"
+    positionning="--geometry=500x300+10+10"
   fi
 }
 
@@ -230,10 +230,8 @@ firststartcheck()
 #first message. Ideally should not appear twice. to test if it works 
 if [ ! -f "firststart.txt" ] ; then
   #./yad --title="Courserian" --borders=10 --width=500  --button="gtk-ok:0"  --text="Welcome to Courserian. Courserian is a tool to make it easy for you to download, browse and manage your Coursera lessons." "$icon" --on-top
-$yadcall --title="Courserian" --borders=10 --width=400  --button="gtk-ok:0"  --text="Welcome to Courserian. Courserian is a tool to make it easy for you to download, browse and manage your Coursera lessons." "$icon" --on-top
-  
-else
-  touch firststart.txt #should create a file without content
+  $yadcall --title="Courserian" --borders=10 --width=400  --button="gtk-ok:0"  --text="Welcome to Courserian. Courserian is a tool to make it easy for you to download, browse and manage your Coursera lessons." "$icon" --on-top
+  touch "firststart.txt" #should create a file without content
 fi
 }
 
