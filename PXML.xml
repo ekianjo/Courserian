@@ -4,7 +4,7 @@
     <exec command="run.sh"/>
     <title lang="en_US">Courserian</title>
     <author name="Ekianjo" website="https://github.com/ekianjo/Courserian"/>
-    <version major="0" minor="3" release="0" build="4" type="release"/>
+    <version major="0" minor="4" release="0" build="5" type="release"/>
     <osversion major="1" minor="0" release="0" build="0"/>
     <description lang="en_US">Courserian is an GUI application to download, manages and view course material from Coursera (http://www.coursera.org), one of the providers of free online courses from renowned universities around the globe. Basically, with Courserian you can follow your donloaded courses on the go, offline, without the need of another computer. I hope Courserian can become your daily companion to learn more stuff, everywhere, every day.
 
@@ -31,6 +31,7 @@ Additional Features:
 - to do: install SMPlayer from extras.
 - to do: email notification from extras
 
+Version 0.4 - Numerous changes and features added. (Need to describe them here...)
 Version 0.3 - Added features (SMPlayer loaded by default always after you set it up once, Column to track which videos you have viewed so far) and another bug fix. 
 Version 0.2 - Added features (file size of course display, show videos only button, background download by default) and various fixes.
 Version 0.1 - Initial Release - Tested only on 1.60 Firmware so far. 
