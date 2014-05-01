@@ -741,6 +741,7 @@ python tracker.py & #this script takes care of displaying the progress bar. Not 
 export SDL_VIDEODRIVER="omapdss"
 export SDL_OMAP_LAYER_SIZE="fullscreen"
 
+checkonline
 creditsfile
 desktoporpandora
 coursesfolder
