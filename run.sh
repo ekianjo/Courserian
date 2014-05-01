@@ -26,11 +26,58 @@
 #try to add preview function
 #add PC mode, not just Pandora, as well as system detection - see if $yad="./yad" or yad works -STARTED
 
+
+#note sur Geometry
+#The WIDTH and HEIGHT parts of the geometry specification are usually measured in either pixels or characters, depending on the application. The XOFF and YOFF parts are measured in pixels and are used to specify the distance of the window from the left or right and top and bottom edges of the screen, respectively. Both types of offsets are measured from the indicated edge of the screen to the corresponding edge of the window. The X offset may be specified in the following ways: 
+#+XOFF 
+#The left edge of the window is to be placed XOFF pixels in from the left edge of the screen (i.e., the X coordinate of the window's origin will be XOFF). XOFF may be negative, in which case the window's left edge will be off the screen. 
+#-XOFF 
+#The right edge of the window is to be placed XOFF pixels in from the right edge of the screen. XOFF may be negative, in which case the window's right edge will be off the screen. 
+
+#The Y offset has similar meanings: 
+#+YOFF 
+#The top edge of the window is to be YOFF pixels below the top edge of the screen (i.e., the Y coordinate of the window's origin will be YOFF). YOFF may be negative, in which case the window's top edge will be off the screen. 
+#-YOFF 
+#The bottom edge of the window is to be YOFF pixels above the bottom edge of the screen. YOFF may be negative, in which case the window's bottom edge will be off the screen. 
+
+#Offsets must be given as pairs; in other words, in order to specify either XOFF or YOFF both must be present. Windows can be placed in the four corners of the screen using the following specifications: 
+#+0+0 
+#upper left hand corner. 
+#-0+0 
+#upper right hand corner. 
+#-0-0 
+#lower right hand corner. 
+#+0-0 
+#lower left hand corner. 
+
 #Initial parameters
 showvideoonly="no" #confirms if only the videos are displayed in the list of content
 icon="--window-icon=icon.png" #icon used for yad windozs
 version=0.2 #version number
 globalcoursesfolder="COURSES"
+downloading="False"
+heightwindow=300 #to check standards
+widthwindow=500 #to check standards
+positionning="--center"
+
+
+signaldownload()
+{
+  if [ ! -f "tmp/downloading" ]; then
+    touch "tmp/downloading"
+  fi
+}
+
+downloadingcheck()
+{
+  if [ ! -f "tmp/downloading" ]; then
+    downloading="True"
+    positionning="--geometry=500x300+10+10"
+  else
+    downloading="False"
+    positionning="--center"
+  fi
+}
 
 loadglobalcoursesfoldervariable()
 {
@@ -172,6 +219,10 @@ coursesfolder()
 if [ ! -d "COURSES" ]; then
   mkdir "COURSES" #creates folder for first time if not there
 fi
+
+if [ ! -d "tmp" ]; then
+  mkdir "tmp" #creates temp folder for first time if not there
+fi
 }
 
 firststartcheck()
@@ -179,7 +230,7 @@ firststartcheck()
 #first message. Ideally should not appear twice. to test if it works 
 if [ ! -f "firststart.txt" ] ; then
   #./yad --title="Courserian" --borders=10 --width=500  --button="gtk-ok:0"  --text="Welcome to Courserian. Courserian is a tool to make it easy for you to download, browse and manage your Coursera lessons." "$icon" --on-top
-$yadcall --title="Courserian" --borders=10 --width=500  --button="gtk-ok:0"  --text="Welcome to Courserian. Courserian is a tool to make it easy for you to download, browse and manage your Coursera lessons." "$icon" --on-top
+$yadcall --title="Courserian" --borders=10 --width=400  --button="gtk-ok:0"  --text="Welcome to Courserian. Courserian is a tool to make it easy for you to download, browse and manage your Coursera lessons." "$icon" --on-top
   
 else
   touch firststart.txt #should create a file without content
@@ -219,10 +270,11 @@ if [ "$login" != "" ]; then
 else
   menutitle="Menu"
 fi
-echo "$menutitle"
+#echo "$menutitle"
+downloadingcheck #checks if positionning needs to be alterered
 
 if [ $totalcourses -eq 0 ] ; then
-  choice=$($yadcall --center --width=300 --borders=5 --height=330 --title="Courserian" --list --column="$menutitle" "$loginentry" "Add a course to follow" "Credits" --image="coursera-small.png" --image-on-top "$icon" --button="gtk-quit:1" --on-top)
+  choice=$($yadcall "$positionning" --width=300 --borders=5 --height=330 --title="Courserian" --list --column="$menutitle" "$loginentry" "Add a course to follow" "Credits" --image="coursera-small.png" --image-on-top "$icon" --button="gtk-quit:1" --on-top)
 else
   #if [ "$lastfolder" != "" ]; then
   #choice=$(./yad --center --width=300 --borders=5 --height=330 --title="Courserian" --list --column="$menutitle" "$loginentry" "Add a course to follow" "$courseentry" "Last working folder" "$browsecourse" "$updatecourse" "Extras" "Credits" --image="coursera-small.png" --image-on-top --button="gtk-quit:1" "$icon" --on-top)
