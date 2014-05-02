@@ -1,5 +1,5 @@
 #import PyZenity
-import subprocess
+import subprocess, os
 from threading import Thread
 import re
 
@@ -60,11 +60,15 @@ def Trace(proc):
 					proczenity.stdin.write("# Downloading...{0}\n".format(message))
 				else:
 					proczenity.stdin.write("# {0}\n".format(line))
+	
+	os.kill(proczenity.pid, signal.SIGTERM) #not sure if it works, so second salve behind...
+	time.sleep(5)
+	proczenity.terminate() #maybe overkill ? 
 
 getvariables()
 					
 command=["python","coursera-dl","""--path=COURSES""","-u",login,"-p",password,currentcourse]
-print command
+#print command
 #cmd = 'zenity --width=500 --height=100 --progress --text="Downloading course... Authenticating..."'
 cmd = './yad --title="Courserian" --width=500 --height=65 --progress --image="coursera-progress2.png" --image-on-top --no-buttons --window-icon=icon.png'
 
