@@ -11,6 +11,7 @@ Made for Pandora in the first place - and now it should also run on any GNU/Linu
 *  Coursera-dl 
 
 For coursera-dl there are two ways you can do it:
+
 *  Put coursera-dl and its dependencies directly in the same working folder as Courserian.
 *  OR the easy way to take care of everything for you: 
 
