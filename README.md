@@ -8,6 +8,7 @@ Made for Pandora in the first place - and now it should also run on any GNU/Linu
 
 *  Yad (should be easy to install via most distros' repositories)
 *  Python 2.7 (not tested on other versions). Default on Pandora SZ1.6 and beyond.
+*  Mplayer (on Pandora, to install with the codec pack) or any default video player on PC
 *  Coursera-dl
 
 For Coursera-dl you can approach the install in two ways depending on what you run Courserian on:
