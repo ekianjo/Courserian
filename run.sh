@@ -53,7 +53,7 @@
 #Initial parameters
 showvideoonly="no" #confirms if only the videos are displayed in the list of content
 icon="--window-icon=icon.png" #icon used for yad windozs
-version=0.2 #version number
+version=0.4 #version number
 globalcoursesfolder="COURSES"
 downloading="False"
 heightwindow=300 #to check standards
