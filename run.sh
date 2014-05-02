@@ -132,6 +132,7 @@ if [[ $? -eq 0 ]]; then
 else
         online="off"
         echo "online status is $online"
+        $yadcall --title="Courserian" --borders=10 --width=400  --button="gtk-ok:0"  --text="You are currently offline. Please get online in order to download new course material." "$icon" --on-top
 fi
 }
 
@@ -728,6 +729,7 @@ splashscreen()
 {
   $yadcall --width=380 --height=140 --image="coursera-large.png" --undecorated --no-buttons --borders=5 --timeout=3 --timeout-indicator=bottom --image-on-top "$icon" --on-top
 }
+
 #DOWNLOAD single coursepython 
 downloadsingleone()
 {
@@ -741,7 +743,7 @@ python tracker.py & #this script takes care of displaying the progress bar. Not 
 export SDL_VIDEODRIVER="omapdss"
 export SDL_OMAP_LAYER_SIZE="fullscreen"
 
-checkonline
+
 creditsfile
 desktoporpandora
 coursesfolder
