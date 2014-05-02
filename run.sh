@@ -56,10 +56,9 @@ icon="--window-icon=icon.png" #icon used for yad windozs
 version=0.4 #version number
 globalcoursesfolder="COURSES"
 downloading="False"
-heightwindow=300 #to check standards
-widthwindow=500 #to check standards
+heightwindow=325 #to check standards
+widthwindow=700 #to check standards
 positionning="--center"
-
 
 signaldownload()
 {
@@ -75,7 +74,7 @@ downloadingcheck()
     positionning="--center"
   else
     downloading="True"
-    positionning="--geometry=500x300+10+10"
+    positionning="--geometry=700x325+50+50"
   fi
 }
 
@@ -273,7 +272,7 @@ fi
 downloadingcheck #checks if positionning needs to be alterered
 
 if [ $totalcourses -eq 0 ] ; then
-  choice=$($yadcall "$positionning" --width=300 --borders=5 --height=330 --title="Courserian" --list --column="$menutitle" "$loginentry" "Add a course to follow" "Credits" --image="coursera-small.png" --image-on-top "$icon" --button="gtk-quit:1" --on-top)
+  choice=$($yadcall "$positionning" --width=700 --borders=5 --height=325 --title="Courserian" --list --column="$menutitle" "$loginentry" "Add a course to follow" "Credits" --image="coursera-small.png" --image-on-top "$icon" --button="gtk-quit:1" --on-top)
 else
   #if [ "$lastfolder" != "" ]; then
   #choice=$(./yad --center --width=300 --borders=5 --height=330 --title="Courserian" --list --column="$menutitle" "$loginentry" "Add a course to follow" "$courseentry" "Last working folder" "$browsecourse" "$updatecourse" "Extras" "Credits" --image="coursera-small.png" --image-on-top --button="gtk-quit:1" "$icon" --on-top)
