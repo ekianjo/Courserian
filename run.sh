@@ -96,7 +96,7 @@ creditsfile()
 {
 #to create a new credits text file to be used by credits function - TO TEST
 if [ ! -f "creditsnew.txt" ]; then
-  credits="Courserian by Ekianjo \n Version "$version""
+  credits="Courserian by Ekianjo - Version "$version"\nUsing Coursera-dl and Yad\nFirst released in 2013 for the Alive and Kicking Coding Competition"
   printf "$credits" > creditsnew.txt 
 else
   credits=$(cat creditsnew.txt)
@@ -450,10 +450,10 @@ for i in $(ls -d */)
     $currentcourse+="$i "
   done
 cd ..
-checkonline
+#checkonline
 downloadsingleone
-cd COURSES
-cd ..
+#cd COURSES
+#cd ..
 menu
 }
 
@@ -713,7 +713,7 @@ echo "$ret"
 if [[ $ret -eq 0 ]]; then
   currentcourse="$entry"
   echo $ret
-  checkonline
+  #checkonline
   downloadsingleone
   updatecourselist
   menu
@@ -733,8 +733,11 @@ splashscreen()
 #DOWNLOAD single coursepython 
 downloadsingleone()
 {
-echo $currentcourse > currentcourse.txt
-python tracker.py & #this script takes care of displaying the progress bar. Not sure how I can do it the same way in bash...
+checkonline
+if [ $online == "on" ]; then
+  echo $currentcourse > currentcourse.txt
+  python tracker.py & #this script takes care of displaying the progress bar. Not sure how I can do it the same way in bash...
+fi
 }
 
 #FULL PROGRAM FLOW BELOW---------------------------------------
@@ -742,7 +745,6 @@ python tracker.py & #this script takes care of displaying the progress bar. Not 
 #pandora specific for drivers (not sure if it actually makes much difference)
 export SDL_VIDEODRIVER="omapdss"
 export SDL_OMAP_LAYER_SIZE="fullscreen"
-
 
 creditsfile
 desktoporpandora
