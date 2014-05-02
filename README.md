@@ -8,8 +8,15 @@ Made for Pandora in the first place - and now it should also run on any GNU/Linu
 
 *  Yad (should be easy to install via most distros' repositories)
 *  Python 2.7 (not tested on other versions)
-*  coursera-dl in the working folder
-*  coursera-dl dependencies
+*  Coursera-dl 
+
+For coursera-dl there are two ways you can do it:
+*  Put coursera-dl and its dependencies directly in the same working folder as Courserian.
+*  OR the easy way to take care of everything for you: 
+
+    sudo pip install coursera-dl
+
+And then you should be done. 
 
 ## Usage
 
