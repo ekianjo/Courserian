@@ -70,7 +70,7 @@ getvariables()
 command=["python","coursera-dl","""--path=COURSES""","-u",login,"-p",password,currentcourse]
 #print command
 #cmd = 'zenity --width=500 --height=100 --progress --text="Downloading course... Authenticating..."'
-cmd = './yad --title="Courserian" --width=500 --height=65 --progress --image="coursera-progress2.png" --image-on-top --no-buttons --window-icon=icon.png'
+cmd = './yad --title="Courserian" --width=700 --height=65 --progress --image="coursera-progress2.png" --image-on-top --no-buttons --window-icon=icon.png'
 
 proczenity = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 proc=Run(command)
