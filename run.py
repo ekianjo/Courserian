@@ -54,4 +54,31 @@ def returnfiles(directory):
     
     return finalstring      
 
+def firsttimeusage():
+    if os.path.isfile("firsttime.txt"):
+        return False
+    else:
+        with open("firsttime.txt", 'a'):
+            os.utime("firsttime.txt", None)
+        return True
+
+def checkloginpass():
+    if os.path.isfile("login.txt") and os.path.isfile("password.txt"):
+        return True
+    else:
+        return False
+
+def displaymenu():
+    pass
+
+def main():
+    
+    createcoursefolder()
+    if firsttimeusage()==True:
+        pass #display welcome message
+    
+    
+    
+    
+
 #locate smplayer
