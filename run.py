@@ -18,16 +18,40 @@ def createcoursefolder():
     if not os.path.isdir("COURSES"):
         os.makedirs("COURSES")
 
+
+def getFolderSize(folder):
+    total_size = os.path.getsize(folder)
+    for item in os.listdir(folder):
+        itempath = os.path.join(folder, item)
+        if os.path.isfile(itempath):
+            total_size += os.path.getsize(itempath)
+        elif os.path.isdir(itempath):
+            total_size += getFolderSize(itempath)
+    return total_size
+
 #see if i cannot simplify this function...
-def returncontents(directory):
+def returnfolders(directory):
     contentdirs=[]
-    contentfiles=[]
     for element in os.listdir(directory):
         if os.path.isdir(element):
             contentdirs.append(str(element))
-        else:
-            if os.path.isfile(element):
-                contentfiles.append(str(element))
-          
+    
+    finalstring=""
+    for element in contentdirs:
+        finalstring+="> "+str(element)+" "+getFolderSize(element)+" "
+    
+    return finalstring
+    
+def returnfiles(directory):
+    contentfiles=[]
+    for element in os.listdir(directory):
+        if os.path.isfile(element):
+            contentfiles.append(str(element))
+    
+    finalstring=""
+    for element in contentfiles:
+        finalstring+=str(element)+" "+os.path.getsize(element)+" "
+    
+    return finalstring      
 
 #locate smplayer
