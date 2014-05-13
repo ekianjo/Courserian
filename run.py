@@ -71,6 +71,16 @@ def checkloginpass():
 def displaymenu():
     pass
 
+def locatesmplayer():
+    smplayerlocation=""
+    for item in os.listdir("/media/"):
+        if not "smplayer2_r6.pnd" in item:
+            continue
+        else:
+            smplayerlocation=item
+            print smplayerlocation
+            return smplayerlocation
+
 def main():
     
     createcoursefolder()
